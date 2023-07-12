@@ -3,28 +3,32 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\CreatedAtTrait;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\InformationSessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: InformationSessionRepository::class)]
 class InformationSession
 {
+    use CreatedAtTrait;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id;
 
     #[ORM\Column(length: 13)]
+    #[Assert\Length(min: 13, max: 13)]
     private ?string $session_id;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at;
-
     #[ORM\Column(length: 180)]
+    #[Assert\Length(min: 180, max: 180)]
     private ?string $location;
 
     #[ORM\Column(length: 90)]
+    #[Assert\Length(min: 90, max: 90)]
     private ?string $designation;
 
     #[ORM\OneToMany(mappedBy: 'session_id', targetEntity: Users::class)]
@@ -33,6 +37,7 @@ class InformationSession
     public function __construct()
     {
         $this->users = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -48,18 +53,6 @@ class InformationSession
     public function setSessionId(string $session_id): static
     {
         $this->session_id = $session_id;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }

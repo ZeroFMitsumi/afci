@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EmploymentSituationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmploymentSituationRepository::class)]
 class EmploymentSituation
@@ -12,59 +13,75 @@ class EmploymentSituation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column]
-    private ?bool $is_pe = null;
+    #[Assert\NotNull]
+    private ?bool $is_pe;
 
     #[ORM\Column]
-    private ?bool $is_indemnisation_pe = null;
+    #[Assert\NotNull]
+    private ?bool $is_indemnisation_pe;
 
     #[ORM\Column]
     private array $inscrit_since = [];
 
-    #[ORM\Column(length: 9)]
-    private ?string $pe_id = null;
+    #[ORM\Column(length: 8)]
+    #[Assert\Length(min: 8, max: 8)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
+    private ?string $pe_id;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $indemnistaion_type = null;
+    #[Assert\Length(min: 3, max: 255)]
+    private ?string $indemnistaion_type;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $indemnisation_end = null;
+    private ?\DateTimeInterface $indemnisation_end;
 
     #[ORM\Column]
-    private ?bool $is_rsa = null;
+    #[Assert\NotNull]
+    private ?bool $is_rsa;
 
     #[ORM\Column]
-    private ?bool $is_aah = null;
+    #[Assert\NotNull]
+    private ?bool $is_aah;
 
     #[ORM\Column]
-    private ?bool $is_ass = null;
+    #[Assert\NotNull]
+    private ?bool $is_ass;
 
     #[ORM\Column]
-    private ?bool $is_aspa = null;
+    #[Assert\NotNull]
+    private ?bool $is_aspa;
 
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $other_perception = null;
+    #[Assert\Length(min: 3, max: 100)]
+    private ?string $other_perception;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $ml = null;
+    #[Assert\Length(min: 3, max: 255)]
+    private ?string $ml;
 
     #[ORM\Column(length: 14, nullable: true)]
-    private ?string $ml_tel = null;
+    #[Assert\Length(min: 10, max: 14)]
+    private ?string $ml_tel;
 
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $advisor = null;
+    #[Assert\Length(min: 3, max: 100)]
+    private ?string $advisor;
 
     #[ORM\Column(length: 14, nullable: true)]
-    private ?string $advisor_tel = null;
+    #[Assert\Length(min: 10, max: 14)]
+    private ?string $advisor_tel;
 
     #[ORM\Column(length: 180, nullable: true)]
-    private ?string $advisor_mail = null;
+    #[Assert\Length(min: 3, max: 180)]
+    private ?string $advisor_mail;
 
     #[ORM\OneToOne(inversedBy: 'employmentSituation', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id = null;
+    private ?Users $user_id;
 
     public function getId(): ?int
     {

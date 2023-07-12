@@ -4,70 +4,110 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
+use App\Entity\Traits\CreatedAtTrait;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UsersRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use CreatedAtTrait;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre email.')]
     private ?string $email;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre mot de passe.')]
+    #[Assert\Length(
+        min: 8,
+        minMessage: 'Votre mot de passe doit contenir au {{ limit }} caracters',
+    )]
     private ?string $password;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre nom de famille.')]
     private ?string $lastname;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre prénom.')]
     private ?string $firstname;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre adresse.')]
     private ?string $address;
 
     #[ORM\Column(length: 5)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre code postal.')]
+    #[Assert\Length(
+        min: 5, 
+        max: 5,
+        minMessage: 'Votre code postal doit contenir {{ limit }} caracters',
+        maxMessage: 'Votre code postal doit contenir {{ limit }} caracters',
+    )]
     private ?string $zipcode;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre ville.')]
     private ?string $city;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank(message: 'Entrez votre département.')]
     private ?string $departement;
 
     #[ORM\Column(length: 14)]
+    #[Assert\NotNull]
+    #[Assert\Length(
+        min: 10,
+        max: 14,
+        minMessage: 'Votre numéro de téléphone doit contenir {{ limit }} caracters et sans point entre les nombres.',
+        maxMessage: 'Votre numéro de téléphone doit contenir {{ limit }} caracters et avec des points entre les nombres.',
+    )]
     private ?string $tel;
 
     #[ORM\Column(length: 14, nullable: true)]
+    #[Assert\Length(min: 10, max: 14)]
     private ?string $tel2;
 
-    #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $created_at;
-
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $is_valid;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?InformationSession $session;
 
     #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
-    private ?CivilState $civilState = null;
+    private ?CivilState $civilState;
 
     #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
-    private ?EmploymentSituation $employmentSituation = null;
+    private ?EmploymentSituation $employmentSituation;
 
     #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
-    private ?Formation $formation = null;
+    private ?Formation $formation;
 
     public function getId(): ?int
     {
@@ -231,18 +271,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTel2(?string $tel2): static
     {
         $this->tel2 = $tel2;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }

@@ -4,26 +4,34 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Traits\CreatedAtTrait;
 use App\Repository\AdminAjoutRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdminAjoutRepository::class)]
 class AdminAjout
 {
+    use CreatedAtTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
+    #[Assert\NotBlank(message: 'Le champ doit contenir numéro de stagiaire')]
+    #[Assert\Length(
+        min: 10,
+        max: 10,
+    )]
     private ?int $stagiaire_id;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at;
-
-    #[ORM\Column]
+    #[Assert\NotNull()]
     private ?bool $is_pe;
 
     #[ORM\Column]
+    #[Assert\NotNull()]
     private ?bool $is_asp;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
@@ -42,18 +50,6 @@ class AdminAjout
     public function setStagiaireId(int $stagiaire_id): static
     {
         $this->stagiaire_id = $stagiaire_id;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }

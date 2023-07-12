@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\FormationRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 class Formation
@@ -15,33 +16,45 @@ class Formation
     private ?int $id;
 
     #[ORM\Column(length: 150)]
+    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\NotBlank]
+    #[Assert\NotNull]
     private ?string $lastclass;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\DateTime()]
     private ?\DateTimeInterface $schoolleavingdate;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\DateTime()]
     private ?\DateTimeInterface $since;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3, max: 255)]
     private ?string $lastdiplomaobtained;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $lvl3;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $lvl4;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $lvl5;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $lvl6;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $lvl6_2;
 
     #[ORM\Column]
+    #[Assert\NotNull]
     private ?bool $lvl7;
 
     #[ORM\OneToOne(inversedBy: 'formation', cascade: ['persist', 'remove'])]
