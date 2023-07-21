@@ -23,8 +23,8 @@ class EmploymentSituation
     #[Assert\NotNull]
     private ?bool $is_indemnisation_pe;
 
-    #[ORM\Column]
-    private array $inscrit_since = [];
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private \DateTimeInterface $inscrit_since;
 
     #[ORM\Column(length: 8)]
     #[Assert\Length(min: 8, max: 8)]
@@ -112,12 +112,12 @@ class EmploymentSituation
         return $this;
     }
 
-    public function getInscritSince(): array
+    public function getInscritSince(): \DateTimeInterface
     {
         return $this->inscrit_since;
     }
 
-    public function setInscritSince(array $inscrit_since): static
+    public function setInscritSince(\DateTimeInterface $inscrit_since): static
     {
         $this->inscrit_since = $inscrit_since;
 

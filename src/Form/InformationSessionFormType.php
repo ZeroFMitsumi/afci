@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class InformationSessionFormType extends AbstractType
 {
@@ -33,7 +34,7 @@ class InformationSessionFormType extends AbstractType
                 'entry_type' => EntityType::class,
                 // these options are passed to each "email" type
                 'entry_options' => [
-                    'attr' => ['class' => 'Elèves'],
+                    'attr' => ['class' => 'eleves'],
                     'class' => Users::class
                 ],
             ])

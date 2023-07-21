@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Trait\CreatedAtTrait;
 use App\Repository\AdminAjoutRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class AdminAjout
 {
     use CreatedAtTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -36,6 +37,9 @@ class AdminAjout
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $asp_created_at;
+
+    #[ORM\OneToOne(mappedBy: 'stagiaire_id', targetEntity: Users::class)]
+    private ?Users $user;
 
     public function getId(): ?int
     {
@@ -86,6 +90,18 @@ class AdminAjout
     public function setAspCreatedAt(?\DateTimeInterface $asp_created_at): static
     {
         $this->asp_created_at = $asp_created_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?Users
+    {
+        return $this->user;
+    }
+
+    public function setUser($user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

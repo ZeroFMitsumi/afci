@@ -1,0 +1,18 @@
+{% extends 'form.html.twig' %}
+
+{% block main %}
+	<aside class="container my-5 me-0 border rounded-3 text-center w-25 g-0">
+		<div class=" d-flex flex-column justify-content-center border rounded-3 m-3">
+			<h3>Inscription Défi</h3>
+			{{ form_errors(form) }}
+			
+			{{ form_start(form, {'attr': {'class': 'form-control border-0 d-flex flex-column justify-content-center align-items-center'}}) }}
+			{{ form_row(form.stagiaire_id) }}
+			{{ form_row(form.is_pe,{'attr': {'class': 'form-check-control mx-3'}, 'label': 'Pole emploi', 'label_attr' : {'class' : 'form-label'}}) }}
+			{{ form_row(form.is_asp,{'attr': {'class': 'form-check-control mx-3'}, 'label': 'ASP', 'label_attr' : {'class' : 'form-label'}}) }}
+			{{ form_row(form.asp_created_at) }}
+			<button type="submit" class="btn">Enregistrer</button>
+			{{ form_end(form) }}
+		</div>
+	</aside>
+{% endblock %}

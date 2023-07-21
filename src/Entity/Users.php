@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UsersRepository;
-use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Trait\CreatedAtTrait;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 class Users implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use CreatedAtTrait;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -62,7 +62,7 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull]
     #[Assert\NotBlank(message: 'Entrez votre code postal.')]
     #[Assert\Length(
-        min: 5, 
+        min: 5,
         max: 5,
         minMessage: 'Votre code postal doit contenir {{ limit }} caracters',
         maxMessage: 'Votre code postal doit contenir {{ limit }} caracters',
@@ -99,6 +99,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?InformationSession $session;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?AdminAjout $stagiaire_id;
 
     #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
     private ?CivilState $civilState;
@@ -346,6 +349,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->formation = $formation;
+
+        return $this;
+    }
+
+    public function getStagiaire_id(): ?AdminAjout
+    {
+        return $this->stagiaire_id;
+    }
+
+    public function setStagiaire_id($stagiaire_id): self
+    {
+        $this->stagiaire_id = $stagiaire_id;
 
         return $this;
     }

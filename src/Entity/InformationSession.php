@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\CreatedAtTrait;
+use App\Entity\Trait\CreatedAtTrait;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\InformationSessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class InformationSession
 {
     use CreatedAtTrait;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -37,7 +37,6 @@ class InformationSession
     public function __construct()
     {
         $this->users = new ArrayCollection();
-
     }
 
     public function getId(): ?int

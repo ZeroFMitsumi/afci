@@ -18,39 +18,59 @@ class FormationFormType extends AbstractType
     {
         $builder
             ->add('lastclass', TextType::class, [
+                'label' => 'Nom de la dernière formation',
+                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control']
             ])
             ->add('schoolleavingdate', DateType::class, [
+                'widget' => 'choice',
+                'label' => 'Date de sortie',
+                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control']
             ])
             ->add('since', DateType::class, [
+                'widget' => 'choice',
+                'label' => 'Depuis quand',
+                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control']
             ])
             ->add('lastdiplomaobtained', TextType::class, [
+                'label' => 'Diplome obtenu',
+                'label_attr' => ['class' => 'form-label'],
+                'attr' => ['class' => 'form-control']
             ])
             ->add('lvl3', CheckboxType::class, [
+                'mapped' => false,
                 'label' => 'Lvl3',
                 'label_attr' => ['class' => 'btn btn-primary form-check-label'],
                 'attr' => ['class' => 'btn-check form-check-input'],
             ])
             ->add('lvl4', CheckboxType::class, [
+                'mapped' => false,
                 'label' => 'Lvl3',
                 'label_attr' => ['class' => 'btn btn-primary form-check-label'],
                 'attr' => ['class' => 'btn-check form-check-input'],
             ])
             ->add('lvl5', CheckboxType::class, [
+                'mapped' => false,
                 'label' => 'Lvl3',
                 'label_attr' => ['class' => 'btn btn-primary form-check-label'],
                 'attr' => ['class' => 'btn-check form-check-input'],
             ])
             ->add('lvl6', CheckboxType::class, [
+                'mapped' => false,
                 'label' => 'Lvl3',
                 'label_attr' => ['class' => 'btn btn-primary form-check-label'],
                 'attr' => ['class' => 'btn-check form-check-input'],
             ])
             ->add('lvl6_2', CheckboxType::class, [
+                'mapped' => false,
                 'label' => 'Lvl3',
                 'label_attr' => ['class' => 'btn btn-primary form-check-label'],
                 'attr' => ['class' => 'btn-check form-check-input'],
             ])
             ->add('lvl7', CheckboxType::class, [
+                'mapped' => false,
                 'label' => 'Lvl3',
                 'label_attr' => ['class' => 'btn btn-primary form-check-label'],
                 'attr' => ['class' => 'btn-check form-check-input'],
