@@ -31,7 +31,7 @@ class InformationSession
     #[Assert\Length(min: 90, max: 90)]
     private ?string $designation;
 
-    #[ORM\OneToMany(mappedBy: 'session_id', targetEntity: Users::class)]
+    #[ORM\OneToMany(mappedBy: 'session', targetEntity: Users::class)]
     private Collection $users;
 
     public function __construct()
@@ -92,7 +92,7 @@ class InformationSession
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setSessionId($this);
+            $user->setSession($this);
         }
 
         return $this;
@@ -102,8 +102,8 @@ class InformationSession
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getSessionId() === $this) {
-                $user->setSessionId(null);
+            if ($user->getSession() === $this) {
+                $user->setSession(null);
             }
         }
 

@@ -45,6 +45,7 @@ class CivilState
     #[ORM\Column]
     #[Assert\NotNull]
     #[Assert\NotBlank]
+    #[Assert\Positive()]
     private ?int $socialsecuritynumber;
 
     #[ORM\Column(length: 150)]
@@ -69,11 +70,12 @@ class CivilState
     private ?bool $single;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\PositiveOrZero()]
     private ?int $children;
 
     #[ORM\OneToOne(inversedBy: 'civilState', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id;
+    private ?Users $userId;
 
     public function getId(): ?int
     {
@@ -238,12 +240,12 @@ class CivilState
 
     public function getUserId(): ?Users
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(Users $user_id): static
+    public function setUserId(Users $userId): static
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }

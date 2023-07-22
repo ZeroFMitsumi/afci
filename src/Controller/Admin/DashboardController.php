@@ -31,19 +31,15 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        return $this->render('admin/dashboard.html.twig');
+
         // $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Vous devez être connecté pour accéder à cette page.');
         // return parent::index();
-        $url = $this->adminUrlGenerator
-            ->setController(UsersCrudController::class)
-            ->generateUrl();
+        // $url = $this->adminUrlGenerator
+        //     ->setController(UsersCrudController::class)
+        //     ->generateUrl();
 
-        return $this->redirect($url);
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
+        // return $this->redirect($url);
     }
 
     public function configureDashboard(): Dashboard
@@ -58,36 +54,35 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Administration Session');
 
-        yield MenuItem::subMenu('Informations', 'fas fa-bar')->setSubItems([
-            MenuItem::linkToCrud('Create InformationSession', 'fas fa-plus-circle', InformationSession::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show InformationSessions', 'fas fa-eye', InformationSession::class),
+        yield MenuItem::subMenu('Informations', 'fas fa-user')->setSubItems([
+            MenuItem::linkToCrud('Create Session', 'fas fa-plus-circle', InformationSession::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Sessions', 'fas fa-eye', InformationSession::class),
         ]);
 
-        yield MenuItem::subMenu('Ajout Stagiaire', 'fas fa-bar')->setSubItems([
-            MenuItem::linkToCrud('Create Ajout Stagiaire', 'fas fa-plus-circle', AdminAjout::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show Ajouts Stagiaires', 'fas fa-eye', AdminAjout::class),
+        yield MenuItem::subMenu('Ajout Stagiaire', 'fas fa-folder')->setSubItems([
+            MenuItem::linkToCrud('Create Stagiaire', 'fas fa-plus-circle', AdminAjout::class)->setAction(Crud::PAGE_NEW),
+            MenuItem::linkToCrud('Show Stagiaires', 'fas fa-eye', AdminAjout::class),
         ]);
 
         yield MenuItem::section('Utilisateurs');
 
-        yield MenuItem::subMenu('Infos', 'fas fa-bar')->setSubItems([
+        yield MenuItem::subMenu('Infos', 'fas fa-id-card')->setSubItems([
 
             MenuItem::linkToCrud('Voir les Utilisateurs', 'fas fa-eye', Users::class),
             MenuItem::linkToCrud('Créer Utilisateur', 'fas fa-plus-circle', Users::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToRoute('vers', 'fas fa-person', 'app_user'),
         ]);
 
-        yield MenuItem::subMenu('Etat civile', 'fas fa-bar')->setSubItems([
+        yield MenuItem::subMenu('Etat civile', 'fas fa-folder')->setSubItems([
             MenuItem::linkToCrud('Show CivilStates', 'fas fa-eye', CivilState::class),
             MenuItem::linkToCrud('Create CivilState', 'fas fa-plus-circle', CivilState::class)->setAction(Crud::PAGE_NEW),
         ]);
 
-        yield MenuItem::subMenu('Situation d\'emploi', 'fas fa-bar')->setSubItems([
+        yield MenuItem::subMenu('Situation d\'emploi', 'fas fa-folder')->setSubItems([
             MenuItem::linkToCrud('Show EmploymentSituation', 'fas fa-eye', EmploymentSituation::class),
             MenuItem::linkToCrud('Create EmploymentSituation', 'fas fa-plus-circle', EmploymentSituation::class)->setAction(Crud::PAGE_NEW),
         ]);
 
-        yield MenuItem::subMenu('Formation', 'fas fa-bar')->setSubItems([
+        yield MenuItem::subMenu('Formation', 'fas fa-folder')->setSubItems([
             MenuItem::linkToCrud('Show Formation', 'fas fa-eye', Formation::class),
             MenuItem::linkToCrud('Create Formation', 'fas fa-plus-circle', Formation::class)->setAction(Crud::PAGE_NEW),
         ]);

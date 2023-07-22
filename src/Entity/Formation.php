@@ -59,7 +59,7 @@ class Formation
 
     #[ORM\OneToOne(inversedBy: 'formation', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id;
+    private ?Users $userId;
 
     public function getId(): ?int
     {
@@ -188,12 +188,12 @@ class Formation
 
     public function getUserId(): ?Users
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(Users $user_id): static
+    public function setUserId(Users $userId): static
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }

@@ -81,7 +81,7 @@ class EmploymentSituation
 
     #[ORM\OneToOne(inversedBy: 'employmentSituation', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id;
+    private ?Users $userId;
 
     public function getId(): ?int
     {
@@ -282,12 +282,12 @@ class EmploymentSituation
 
     public function getUserId(): ?Users
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(Users $User_id): static
+    public function setUserId(Users $userId): static
     {
-        $this->user_id = $User_id;
+        $this->userId = $userId;
 
         return $this;
     }

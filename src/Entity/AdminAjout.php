@@ -21,6 +21,7 @@ class AdminAjout
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Assert\NotBlank(message: 'Le champ doit contenir numéro de stagiaire')]
+    #[Assert\PositiveOrZero()]
     #[Assert\Length(
         min: 10,
         max: 10,
@@ -38,7 +39,7 @@ class AdminAjout
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $asp_created_at;
 
-    #[ORM\OneToOne(mappedBy: 'stagiaire_id', targetEntity: Users::class)]
+    #[ORM\OneToOne(mappedBy: 'stagiaireId', targetEntity: Users::class)]
     private ?Users $user;
 
     public function getId(): ?int

@@ -101,15 +101,15 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     private ?InformationSession $session;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?AdminAjout $stagiaire_id;
+    private ?AdminAjout $stagiaireId;
 
-    #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'userId', cascade: ['persist', 'remove'])]
     private ?CivilState $civilState;
 
-    #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'userId', cascade: ['persist', 'remove'])]
     private ?EmploymentSituation $employmentSituation;
 
-    #[ORM\OneToOne(mappedBy: 'user_id', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'userId', cascade: ['persist', 'remove'])]
     private ?Formation $formation;
 
     public function getId(): ?int
@@ -290,14 +290,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getSessionId(): ?InformationSession
+    public function getSession(): ?InformationSession
     {
         return $this->session;
     }
 
-    public function setSessionId(?InformationSession $session_id): static
+    public function setSession(?InformationSession $session): static
     {
-        $this->session = $session_id;
+        $this->session = $session;
 
         return $this;
     }
@@ -353,14 +353,14 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getStagiaire_id(): ?AdminAjout
+    public function getStagiaireId(): ?AdminAjout
     {
-        return $this->stagiaire_id;
+        return $this->stagiaireId;
     }
 
     public function setStagiaire_id($stagiaire_id): self
     {
-        $this->stagiaire_id = $stagiaire_id;
+        $this->stagiaireId = $stagiaire_id;
 
         return $this;
     }
