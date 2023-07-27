@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CivilStateRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CivilStateRepository::class)]
 class CivilState
@@ -12,50 +13,69 @@ class CivilState
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id;
 
     #[ORM\Column(length: 100, nullable: true)]
-    private ?string $birthname = null;
+    #[Assert\Length(min: 3, max: 100)]
+    private ?string $birthname;
 
     #[ORM\Column(length: 255)]
-    private ?string $nationality = null;
+    #[Assert\Length(min: 3, max: 255)]
+    #[Assert\NotBlank]
+    private ?string $nationality;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthday = null;
+    private ?\DateTimeInterface $birthday;
 
     #[ORM\Column(length: 150)]
-    private ?string $city = null;
+    #[Assert\Length(min: 3, max: 150)]
+    #[Assert\NotBlank]
+    private ?string $city;
 
     #[ORM\Column(length: 5, nullable: true)]
-    private ?string $zipcode = null;
+    #[Assert\Length(min: 5, max: 5)]
+    #[Assert\NotBlank]
+    private ?string $zipcode;
 
     #[ORM\Column(length: 255)]
-    private ?string $country = null;
+    #[Assert\Length(min: 3, max: 255)]
+    #[Assert\NotBlank]
+    private ?string $country;
 
     #[ORM\Column]
-    private ?int $socialsecuritynumber = null;
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Positive()]
+    private ?int $socialsecuritynumber;
 
     #[ORM\Column(length: 150)]
-    private ?string $cpam = null;
+    #[Assert\NotNull()]
+    #[Assert\NotBlank]
+    private ?string $cpam;
 
     #[ORM\Column]
-    private ?bool $man = null;
+    #[Assert\NotNull()]
+    private ?bool $man;
 
     #[ORM\Column]
-    private ?bool $woman = null;
+    #[Assert\NotNull()]
+    private ?bool $woman;
 
     #[ORM\Column]
-    private ?bool $maried = null;
+    #[Assert\NotNull()]
+    private ?bool $maried;
 
     #[ORM\Column]
-    private ?bool $single = null;
+    #[Assert\NotNull()]
+    private ?bool $single;
 
     #[ORM\Column(nullable: true)]
-    private ?int $children = null;
+    #[Assert\PositiveOrZero()]
+    private ?int $children;
 
     #[ORM\OneToOne(inversedBy: 'civilState', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id = null;
+    private ?Users $userId;
 
     public function getId(): ?int
     {
@@ -220,12 +240,12 @@ class CivilState
 
     public function getUserId(): ?Users
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(Users $user_id): static
+    public function setUserId(Users $userId): static
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
 
         return $this;
     }

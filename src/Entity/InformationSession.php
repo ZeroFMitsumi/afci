@@ -3,31 +3,35 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Trait\CreatedAtTrait;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\InformationSessionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: InformationSessionRepository::class)]
 class InformationSession
 {
+    use CreatedAtTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id;
 
     #[ORM\Column(length: 13)]
+    #[Assert\Length(min: 13, max: 13)]
     private ?string $session_id;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at;
-
     #[ORM\Column(length: 180)]
+    #[Assert\Length(min: 180, max: 180)]
     private ?string $location;
 
     #[ORM\Column(length: 90)]
+    #[Assert\Length(min: 90, max: 90)]
     private ?string $designation;
 
-    #[ORM\OneToMany(mappedBy: 'session_id', targetEntity: Users::class)]
+    #[ORM\OneToMany(mappedBy: 'session', targetEntity: Users::class)]
     private Collection $users;
 
     public function __construct()
@@ -48,18 +52,6 @@ class InformationSession
     public function setSessionId(string $session_id): static
     {
         $this->session_id = $session_id;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
 
         return $this;
     }
@@ -100,7 +92,7 @@ class InformationSession
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->setSessionId($this);
+            $user->setSession($this);
         }
 
         return $this;
@@ -110,8 +102,8 @@ class InformationSession
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getSessionId() === $this) {
-                $user->setSessionId(null);
+            if ($user->getSession() === $this) {
+                $user->setSession(null);
             }
         }
 

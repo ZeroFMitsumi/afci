@@ -1,0 +1,18 @@
+{% extends 'form.html.twig' %}
+{% block title %}Informations{% endblock %}
+{% block main %}
+<section class="row justify-content-center p-2 rounded-4 my-3">
+    <div class="col-3 border border-bottom-0 border-top-0 m-3">
+        <h1>Information session formation</h1>
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+            {{ form_row(form.session_id) }}
+            {{ form_row(form.location) }}
+            {{ form_row(form.designation) }}
+            {{ form_row(form.users) }}
+            <button type="submit" class="btn">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

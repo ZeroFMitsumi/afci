@@ -1,0 +1,30 @@
+{% extends 'form.html.twig' %}
+
+{% block form %}
+<section class="row justify-content-center p-2 rounded-4 my-3">
+    <div class="col-3 border border-bottom-0 border-top-0 m-3">
+        <h1>Employement situation</h1>
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+            {{ form_row(form.is_pe) }}
+            {{ form_row(form.is_indemnisation_pe) }}
+            {{ form_row(form.inscit_since) }}
+            {{ form_row(form.pe_id) }}
+            {{ form_row(form.indemnisation_type) }}
+            {{ form_row(form.indemnisation_end) }}
+            {{ form_row(form.is_rsa) }}
+            {{ form_row(form.is_aah) }}
+            {{ form_row(form.is_ass) }}
+            {{ form_row(form.is_asp) }}
+            {{ form_row(form.other_perception) }}
+            {{ form_row(form.ml) }}
+            {{ form_row(form.ml_tel) }}
+            {{ form_row(form.advisor) }}
+            {{ form_row(form.advisor_tel) }}
+            {{ form_row(form.advisor_mail) }}
+            <button type="submit" class="btn">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}
